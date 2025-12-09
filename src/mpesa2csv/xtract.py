@@ -1,5 +1,8 @@
 #!/usr/bin/env python
-import argparse
+"""
+PDF extraction module for mpesa-tools
+"""
+
 import csv
 import json
 import os
@@ -161,34 +164,6 @@ def clean_amount_to_number(amount_str):
         return float(amount_str)
     except ValueError:
         return None
-
-
-def is_valid_date(date_string):
-    """Check if date string is in valid format"""
-    try:
-        datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S")
-        return True
-    except ValueError:
-        return False
-
-
-def extract_date_from_text(text):
-    """Extract date from various text formats"""
-    if not text:
-        return ""
-
-    # Common date patterns in M-PESA statements
-    date_patterns = [
-        r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}",  # 2025-11-21 21:26:56
-        r"\d{2}/\d{2}/\d{4} \d{2}:\d{2}:\d{2}",  # 21/11/2025 21:26:56
-    ]
-
-    for pattern in date_patterns:
-        match = re.search(pattern, text)
-        if match:
-            return match.group()
-
-    return text
 
 
 def save_to_csv(transactions, output_path):
@@ -357,45 +332,10 @@ def convert_mpesa_pdf(
     return success
 
 
-def main():
-    """Main function with command line argument parsing"""
-    parser = argparse.ArgumentParser(
-        description="Convert M-PESA PDF statements to CSV or JSON format",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
-Examples:
-  %(prog)s statement.pdf -f csv
-  %(prog)s statement.pdf -f json -o custom_output.json
-  %(prog)s statement.pdf --format csv --output my_transactions.csv
-        """,
-    )
-
-    parser.add_argument("input_pdf", help="Path to the M-PESA PDF statement file")
-
-    parser.add_argument(
-        "-f",
-        "--format",
-        choices=["csv", "json"],
-        default="csv",
-        help="Output format (default: csv)",
-    )
-
-    parser.add_argument(
-        "-o",
-        "--output",
-        help="Output file path. If not provided, generated automatically from input file name",
-    )
-
-    parser.add_argument(
-        "-s", "--summary", action="store_true", help="Show Conversion Summary"
-    )
-
-    parser.add_argument(
-        "--version", action="version", version="M-PESA PDF Converter 1.0"
-    )
-
-    args = parser.parse_args()
-
+def xtract_main(args):
+    """
+    Main function for xtract subcommand
+    """
     if not os.path.isfile(args.input_pdf):
         print(f"Error: Input file '{args.input_pdf}' not found.")
         return 1
@@ -411,4 +351,16 @@ Examples:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    # For standalone execution
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Extract M-Pesa transactions from PDF")
+    parser.add_argument("input_pdf", help="Path to the M-PESA PDF statement file")
+    parser.add_argument(
+        "-f", "--format", choices=["csv", "json"], default="csv", help="Output format"
+    )
+    parser.add_argument("-o", "--output", help="Output file path")
+    parser.add_argument("-s", "--summary", action="store_true", help="Show summary")
+
+    args = parser.parse_args()
+    sys.exit(xtract_main(args))

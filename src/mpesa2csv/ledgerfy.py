@@ -1,5 +1,8 @@
 #!/usr/bin/env python
-import argparse
+"""
+Ledger conversion module for mpesa-tools
+"""
+
 import csv
 import json
 import sys
@@ -229,7 +232,36 @@ def get_default_output_path(input_path, output_format):
     return f"{base_name}.{output_format}"
 
 
-def main():
+def ledgerfy_main(args):
+    """
+    Main function for ledgerfy subcommand
+    """
+    if not Path(args.input_file).exists():
+        print(f"Error: Input file '{args.input_file}' not found.")
+        return 1
+
+    if not args.output:
+        args.output = get_default_output_path(args.input_file, "dat")
+
+    try:
+        parse_mpesa_to_ledger_with_balance(
+            args.input_file,
+            args.output,
+            args.start_date,
+            args.end_date,
+            args.config,
+        )
+    except ValueError as e:
+        print(f"Configuration error: {e}")
+        return 1
+
+    return 0
+
+
+if __name__ == "__main__":
+    # For standalone execution
+    import argparse
+
     parser = argparse.ArgumentParser(
         description="Convert M-Pesa CSV to Ledger format with balance."
     )
@@ -239,7 +271,7 @@ def main():
     parser.add_argument(
         "--config",
         type=str,
-        default="mpesa_categories.json",
+        default="mpesa_rules.json",
         help="Path to the configuration file (JSON). Defaults to mpesa_categories.json",
     )
     parser.add_argument(
@@ -254,7 +286,6 @@ def main():
         default=str(datetime.now().year) + "-01-01",
         help="Start date for processing transactions (YYYY-MM-DD). Defaults to 2025-01-01",
     )
-
     parser.add_argument(
         "-e",
         "--end-date",
@@ -263,34 +294,4 @@ def main():
     )
 
     args = parser.parse_args()
-
-    if not args.output_file_path:
-        args.output_file_path = get_default_output_path(args.csv_file_path, "dat")
-
-    try:
-        parse_mpesa_to_ledger_with_balance(
-            args.csv_file_path,
-            args.output_file_path,
-            args.start_date,
-            args.end_date,
-            args.config,
-        )
-    except ValueError as e:
-        print(f"Configuration error: {e}")
-        return 1
-
-    return 0
-
-
-if __name__ == "__main__":
-    sys.exit(main())
-
-# if __name__ == "__main__":
-#     # sys.exit(main())
-#     parse_mpesa_to_ledger_with_balance(
-#         "/home/sato/.IT/python/projects/mpesa2csv/src/mpesa2csv/test/output_test.csv",
-#         "/home/sato/.IT/python/projects/mpesa2csv/src/mpesa2csv/test/output_test.dat",
-#         "2025-01-01",
-#         None,
-#         "/home/sato/.IT/python/projects/mpesa2csv/src/mpesa2csv/config.json",
-#     )
+    sys.exit(ledgerfy_main(args))

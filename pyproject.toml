@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "mpesa2csv"
+name = "mpesa-tools"
 dynamic = ["version"]
 description = 'Mpesa Statement to various formats'
 readme = "README.md"
@@ -30,8 +30,7 @@ dependencies = [
 ]
 
 [project.scripts]
-mpesa2csv = "mpesa_tools.mpesa2csv:main"
-mpesacsv2ledger = "mpesa_tools.mpesacsv2ledger:main"
+mpesa-tools = "mpesa2csv.cli:main"
 
 [project.urls]
 Documentation = "https://github.com/jonnieey/mpesa2csv#readme"
@@ -56,6 +55,17 @@ parallel = true
 omit = [
   "src/mpesa2csv/__about__.py",
 ]
+
+[tool.hatch.build]
+exclude = [
+    "tests/",
+    ".github/",
+    ".gitignore",
+    "*.pyc",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mpesa2csv"]
 
 [tool.coverage.paths]
 mpesa2csv = ["src/mpesa2csv", "*/mpesa2csv/src/mpesa2csv"]
