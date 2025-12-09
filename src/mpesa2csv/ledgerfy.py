@@ -66,9 +66,46 @@ def validate_config(config):
         if not isinstance(rule["keywords"], list):
             raise ValueError(f"Rule {i} keywords must be a list")
 
+        # Validate match_type if present
+        if "match_type" in rule:
+            match_type = rule["match_type"]
+            if match_type not in ["any", "all"]:
+                raise ValueError(
+                    f"Rule {i} has invalid match_type '{match_type}'. Must be 'any' or 'all'."
+                )
+
     print(
         f"Configuration validated: {len(config['accounts'])} accounts, {len(config['rules'])} rules"
     )
+
+
+def check_keywords_match(details_lower, keywords, match_type="any", exclude=None):
+    """
+    Check if keywords match based on match_type (AND/OR logic)
+
+    Args:
+        details_lower: Transaction details in lowercase
+        keywords: List of keywords to check
+        match_type: "any" (OR logic, default) or "all" (AND logic)
+        exclude: List of exclude keywords
+
+    Returns:
+        bool: True if keywords match according to match_type
+    """
+    if not keywords:
+        return False
+
+    # Check exclude keywords first
+    if exclude and any(exclude_keyword in details_lower for exclude_keyword in exclude):
+        return False
+
+    # Check keywords based on match_type
+    if match_type == "all":
+        # AND logic: all keywords must be present
+        return all(keyword in details_lower for keyword in keywords)
+    else:
+        # OR logic: any keyword must be present (default)
+        return any(keyword in details_lower for keyword in keywords)
 
 
 def categorize_transaction(details, amount, config):
@@ -82,24 +119,23 @@ def categorize_transaction(details, amount, config):
         keywords = rule.get("keywords", [])
         exclude = rule.get("exclude", [])
         condition = rule.get("condition")
+        match_type = rule.get("match_type", "any")  # Default to "any" (OR logic)
 
-        # Check if any exclude keywords match
-        if any(exclude_keyword in details_lower for exclude_keyword in exclude):
+        # Check if keywords match based on match_type
+        if not check_keywords_match(details_lower, keywords, match_type, exclude):
             continue
 
-        # Check if any keyword matches
-        if any(keyword in details_lower for keyword in keywords):
-            # If there's a condition, check it
-            if condition:
-                try:
-                    if eval(condition, {"amount": amount}):
-                        return rule["account"]
-                except:
-                    # If condition evaluation fails, continue to next rule
-                    continue
-            else:
-                # No condition, return the account
-                return rule["account"]
+        # If there's a condition, check it
+        if condition:
+            try:
+                if eval(condition, {"amount": amount}):
+                    return rule["account"]
+            except:
+                # If condition evaluation fails, continue to next rule
+                continue
+        else:
+            # No condition, return the account
+            return rule["account"]
 
     # Return default account if no rule matches
     return config["default_account"]
@@ -271,7 +307,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--config",
         type=str,
-        default="mpesa_rules.json",
+        default="mpesa_categories.json",
         help="Path to the configuration file (JSON). Defaults to mpesa_categories.json",
     )
     parser.add_argument(

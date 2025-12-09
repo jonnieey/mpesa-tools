@@ -1,11 +1,38 @@
 {
   "accounts": [
+    "Assets:Checking:Cash",
+    "Assets:Reimbursments",
+    "Assets:Reimbursments:Special",
+    "Expenses:Airtime",
+    "Expenses:Mpesa Charges",
+    "Expenses:Taxes:Fines",
     "Income",
-    "Assets",
-    "Expenses",
+    "Income:Jobs",
     "Liabilities"
   ],
   "rules": [
+    {
+      "keywords": ["airtime", "data bundle"],
+      "match_type": "any",
+      "account": "Expenses:Airtime"
+    },
+    {
+      "keywords": ["traffic", "fine"],
+      "match_type": "all",
+      "exclude": ["charge"],
+      "account": "Expenses:Taxes:Fines"
+    },
+    {
+      "keywords": ["received", "john doe"],
+      "match_type": "all",
+      "condition": "amount > 5000",
+      "account": "Assets:Reimbursments:Special"
+    },
+    {
+      "keywords": ["withdrawal", "charge"],
+      "match_type": "any",
+      "account": "Assets:Checking:Cash"
+    },
     {
       "keywords": ["jobs inc"],
       "account": "Income:Jobs"
@@ -15,8 +42,13 @@
       "account": "Assets:Reimbursments"
     },
     {
+      "keywords": ["withdrawal"],
+      "exclude": ["charge"],
+      "account": "Assets:Checking:Cash"
+    },
+    {
       "keywords": ["charge", "withdrawal"],
-      "account": "Expenses"
+      "account": "Expenses:Mpesa Charges"
     }
   ],
   "default_account": "Expenses:Others"
