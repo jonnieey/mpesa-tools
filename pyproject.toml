@@ -30,30 +30,30 @@ dependencies = [
 ]
 
 [project.scripts]
-mpesa-tools = "mpesa2csv.cli:main"
+mpesa-tools = "mpesatools.cli:main"
 
 [project.urls]
-Documentation = "https://github.com/jonnieey/mpesa2csv#readme"
-Issues = "https://github.com/jonnieey/mpesa2csv/issues"
-Source = "https://github.com/jonnieey/mpesa2csv"
+Documentation = "https://github.com/jonnieey/mpesatools#readme"
+Issues = "https://github.com/jonnieey/mpesatools/issues"
+Source = "https://github.com/jonnieey/mpesatools"
 
 [tool.hatch.version]
-path = "src/mpesa2csv/__about__.py"
+path = "src/mpesatools/__about__.py"
 
 [tool.hatch.envs.types]
 extra-dependencies = [
   "mypy>=1.0.0",
 ]
 [tool.hatch.envs.types.scripts]
-check = "mypy --install-types --non-interactive {args:src/mpesa2csv tests}"
+check = "mypy --install-types --non-interactive {args:src/mpesatools tests}"
 
 
 [tool.coverage.run]
-source_pkgs = ["mpesa2csv", "tests"]
+source_pkgs = ["mpesatools", "tests"]
 branch = true
 parallel = true
 omit = [
-  "src/mpesa2csv/__about__.py",
+  "src/mpesatools/__about__.py",
 ]
 
 [tool.hatch.build]
@@ -65,11 +65,11 @@ exclude = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/mpesa2csv"]
+packages = ["src/mpesatools"]
 
 [tool.coverage.paths]
-mpesa2csv = ["src/mpesa2csv", "*/mpesa2csv/src/mpesa2csv"]
-tests = ["tests", "*/mpesa2csv/tests"]
+mpesatools = ["src/mpesatools", "*/mpesatools/src/mpesatools"]
+tests = ["tests", "*/mpesatools/tests"]
 
 [tool.coverage.report]
 exclude_lines = [
