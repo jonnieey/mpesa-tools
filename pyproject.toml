@@ -1,0 +1,69 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mpesa2csv"
+dynamic = ["version"]
+description = 'Mpesa Statement to various formats'
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+keywords = ["mpesa", "pdf", "csv", "ledger", "finance"]
+authors = [
+  { name = "jonnieey", email = "johnjahi55@gmail.com" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = [
+  'pdfplumber>=0.11.8',
+  'pandas>=2.3.3'
+]
+
+[project.scripts]
+mpesa2csv = "mpesa_tools.mpesa2csv:main"
+mpesacsv2ledger = "mpesa_tools.mpesacsv2ledger:main"
+
+[project.urls]
+Documentation = "https://github.com/jonnieey/mpesa2csv#readme"
+Issues = "https://github.com/jonnieey/mpesa2csv/issues"
+Source = "https://github.com/jonnieey/mpesa2csv"
+
+[tool.hatch.version]
+path = "src/mpesa2csv/__about__.py"
+
+[tool.hatch.envs.types]
+extra-dependencies = [
+  "mypy>=1.0.0",
+]
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/mpesa2csv tests}"
+
+
+[tool.coverage.run]
+source_pkgs = ["mpesa2csv", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/mpesa2csv/__about__.py",
+]
+
+[tool.coverage.paths]
+mpesa2csv = ["src/mpesa2csv", "*/mpesa2csv/src/mpesa2csv"]
+tests = ["tests", "*/mpesa2csv/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
