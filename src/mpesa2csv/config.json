@@ -1,0 +1,23 @@
+{
+  "accounts": [
+    "Income",
+    "Assets",
+    "Expenses",
+    "Liabilities"
+  ],
+  "rules": [
+    {
+      "keywords": ["jobs inc"],
+      "account": "Income:Jobs"
+    },
+    {
+      "keywords": ["received"],
+      "account": "Assets:Reimbursments"
+    },
+    {
+      "keywords": ["charge", "withdrawal"],
+      "account": "Expenses"
+    }
+  ],
+  "default_account": "Expenses:Others"
+}
