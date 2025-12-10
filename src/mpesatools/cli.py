@@ -10,6 +10,8 @@ from datetime import datetime
 from .xtract import xtract_main
 from .ledgerfy import ledgerfy_main
 from . import __version__
+from platformdirs import user_data_dir
+from pathlib import Path
 
 
 def main():
@@ -71,8 +73,8 @@ Examples:
     )
     ledgerfy_parser.add_argument(
         "--config",
-        default="mpesa_categories.json",
-        help="Path to the configuration file (JSON). Defaults to mpesa_categories.json",
+        default=Path(user_data_dir("mpesa-tools")) / "mpesa_rules.json",
+        help="Path to the configuration file (JSON). Defaults to mpesa_rules.json",
     )
     ledgerfy_parser.add_argument(
         "--output", help="Path to the output Ledger file. Defaults to <input_file>.dat"

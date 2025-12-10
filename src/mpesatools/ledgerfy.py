@@ -9,16 +9,27 @@ import sys
 from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
+from platformdirs import user_data_dir
+import shutil
 
 
 def load_config(config_path):
     """
     Load configuration from JSON file with validation
     """
-    with open(config_path, "r") as config_file:
-        config = json.load(config_file)
+    config_path = Path(config_path)
 
-    # Validate configuration
+    if not config_path.exists():
+        default_config = Path(__file__).parent / "mpesa_rules.json"
+        if default_config.exists():
+            config_path.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(default_config, config_path)
+        else:
+            raise ValueError(f"Config file '{config_path}' not found.")
+
+    with config_path.open("r") as file:
+        config = json.load(file)
+
     validate_config(config)
 
     return config
@@ -130,7 +141,7 @@ def categorize_transaction(details, amount, config):
             try:
                 if eval(condition, {"amount": amount}):
                     return rule["account"]
-            except:
+            except Exception:
                 # If condition evaluation fails, continue to next rule
                 continue
         else:
@@ -307,8 +318,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "--config",
         type=str,
-        default="mpesa_categories.json",
-        help="Path to the configuration file (JSON). Defaults to mpesa_categories.json",
+        default=Path(user_data_dir("mpesa-tools")) / "mpesa_rules.json",
+        help="Path to the configuration file (JSON). Defaults to mpesa_rules.json",
     )
     parser.add_argument(
         "--output_file_path",
