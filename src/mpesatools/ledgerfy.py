@@ -197,13 +197,9 @@ def parse_mpesa_to_ledger_with_balance(
         if status.lower() != "completed":
             continue
 
-        # Determine amount and account
-        if paid_in > 0:
-            amount = paid_in
-            account = categorize_transaction(details, amount, config)
-        else:
-            amount = withdrawn
-            account = categorize_transaction(details, amount, config)
+        is_deposit = paid_in > 0 if paid_in else False
+        amount = paid_in if is_deposit else withdrawn
+        account = categorize_transaction(details, amount, config)
 
         transactions_by_date[transaction_date].append(
             {
@@ -212,6 +208,7 @@ def parse_mpesa_to_ledger_with_balance(
                 "details": details,
                 "balance": balance,
                 "timestamp": completion_time,
+                "is_deposit": is_deposit,
             }
         )
     # Check if we have any transactions in the date range
@@ -235,14 +232,14 @@ def parse_mpesa_to_ledger_with_balance(
             for i, transaction in enumerate(daily_transactions):
                 account = transaction["account"]
                 amount = transaction["amount"]
+                is_deposit = transaction["is_deposit"]
                 details = transaction["details"]
                 balance = transaction["balance"]
 
-                # For expenses, amount is positive; for income, negative
-                if account.startswith("Expenses"):
-                    formatted_amount = f"{amount:15.2f} KES"
-                else:
+                if is_deposit:
                     formatted_amount = f"{-amount:15.2f} KES"  # Negative for income
+                else:
+                    formatted_amount = f"{amount:15.2f} KES"
 
                 # Truncate details if too long
                 truncated_details = details
