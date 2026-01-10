@@ -219,7 +219,7 @@ def parse_mpesa_to_ledger_with_balance(
         return
 
     # Write ledger file with daily ending balance
-    with open(output_file_path, "w", encoding="utf-8") as ledger_file:
+    with open(output_file_path, "a", encoding="utf-8") as ledger_file:
         for date in sorted(transactions_by_date.keys()):
             ledger_file.write(f"{date} *\n")
             ledger_file.write("    Assets:Checking:Mpesa\n")
@@ -284,13 +284,13 @@ def ledgerfy_main(args):
         print(f"Error: Input file '{args.input_file}' not found.")
         return 1
 
-    if not args.output:
-        args.output = get_default_output_path(args.input_file, "dat")
+    if not args.output_file_path:
+        args.output_file_path = get_default_output_path(args.input_file, "dat")
 
     try:
         parse_mpesa_to_ledger_with_balance(
             args.input_file,
-            args.output,
+            args.output_file_path,
             args.start_date,
             args.end_date,
             args.config,
@@ -310,7 +310,7 @@ if __name__ == "__main__":
         description="Convert M-Pesa CSV to Ledger format with balance."
     )
     parser.add_argument(
-        "csv_file_path", type=str, help="Path to the input M-Pesa CSV file."
+        "input_file", type=str, help="Path to the input M-Pesa CSV file."
     )
     parser.add_argument(
         "--config",
