@@ -45,6 +45,10 @@ path = "src/mpesatools/__about__.py"
 extra-dependencies = [
   "mypy>=1.0.0",
 ]
+[tool.hatch.envs.dev]
+dependencies = [
+   "pre-commit<4.0.0,>=3.6.2",
+]
 [tool.hatch.envs.types.scripts]
 check = "mypy --install-types --non-interactive {args:src/mpesatools tests}"
 

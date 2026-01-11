@@ -209,20 +209,20 @@ Behavior:
       "keywords": ["salary", "payroll"],
       "account": "Income:Salary"
     },
-    
+
     // Large bonuses go to separate account
     {
       "keywords": ["bonus"],
       "condition": "amount >= 10000",
       "account": "Income:Bonus:Large"
     },
-    
+
     // Regular bonuses
     {
       "keywords": ["bonus"],
       "account": "Income:Bonus"
     },
-    
+
     // Dining vs groceries based on keywords
     {
       "keywords": ["restaurant", "cafe", "hotel"],
@@ -234,7 +234,7 @@ Behavior:
       "match_type": "any",
       "account": "Expenses:Food:Groceries"
     },
-    
+
     // Fuel purchases with premium detection
     {
       "keywords": ["shell", "v-power", "premium"],
@@ -246,7 +246,7 @@ Behavior:
       "match_type": "any",
       "account": "Expenses:Transport:Fuel:Regular"
     },
-    
+
     // Cash withdrawals without charges
     {
       "keywords": ["withdrawal", "agent"],
@@ -254,7 +254,7 @@ Behavior:
       "exclude": ["charge", "fee"],
       "account": "Assets:Checking:Cash"
     },
-    
+
     // M-Pesa charges
     {
       "keywords": ["charge", "withdrawal"],

@@ -3,7 +3,7 @@ import argparse
 import json
 import csv
 import tempfile
-from datetime import datetime, timedelta
+from datetime import datetime
 from ledgerfy import ledgerfy_main
 import subprocess
 import sys
