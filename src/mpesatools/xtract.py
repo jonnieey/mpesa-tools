@@ -9,7 +9,6 @@ import os
 import pdfplumber
 import re
 import sys
-from datetime import datetime
 from pathlib import Path
 
 
