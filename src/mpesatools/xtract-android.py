@@ -253,7 +253,7 @@ if __name__ == "__main__":
         "-s",
         "--start-date",
         type=str,
-        default=(datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d"),
+        default=(datetime.now()).strftime("%Y-%m-%d"),
         help="Start date for processing transactions (YYYY-MM-DD).",
     )
     parser.add_argument(
