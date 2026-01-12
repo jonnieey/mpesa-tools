@@ -1,0 +1,62 @@
+<TaskerData sr="" dvi="1" tv="6.5.11">
+	<Profile sr="prof2" ve="2">
+		<cdate>1768181683261</cdate>
+		<clp>true</clp>
+		<edate>1768184265032</edate>
+		<flags>8</flags>
+		<id>2</id>
+		<mid0>3</mid0>
+		<nme>Mpesa-tools</nme>
+		<Time sr="con0">
+			<fh>23</fh>
+			<fm>50</fm>
+			<th>23</th>
+			<tm>53</tm>
+		</Time>
+	</Profile>
+	<Task sr="task3">
+		<cdate>1768182381079</cdate>
+		<edate>1768183606929</edate>
+		<id>3</id>
+		<Action sr="act0" ve="7">
+			<code>1256900802</code>
+			<Bundle sr="arg0">
+				<Vals sr="val">
+					<com.termux.execute.arguments>&lt;null&gt;</com.termux.execute.arguments>
+					<com.termux.execute.arguments-type>java.lang.String</com.termux.execute.arguments-type>
+					<com.termux.tasker.extra.BACKGROUND_CUSTOM_LOG_LEVEL>&lt;null&gt;</com.termux.tasker.extra.BACKGROUND_CUSTOM_LOG_LEVEL>
+					<com.termux.tasker.extra.BACKGROUND_CUSTOM_LOG_LEVEL-type>java.lang.String</com.termux.tasker.extra.BACKGROUND_CUSTOM_LOG_LEVEL-type>
+					<com.termux.tasker.extra.EXECUTABLE>/data/data/com.termux/files/home/mpesa-tools/run-mpesa.sh</com.termux.tasker.extra.EXECUTABLE>
+					<com.termux.tasker.extra.EXECUTABLE-type>java.lang.String</com.termux.tasker.extra.EXECUTABLE-type>
+					<com.termux.tasker.extra.SESSION_ACTION>&lt;null&gt;</com.termux.tasker.extra.SESSION_ACTION>
+					<com.termux.tasker.extra.SESSION_ACTION-type>java.lang.String</com.termux.tasker.extra.SESSION_ACTION-type>
+					<com.termux.tasker.extra.STDIN>&lt;null&gt;</com.termux.tasker.extra.STDIN>
+					<com.termux.tasker.extra.STDIN-type>java.lang.String</com.termux.tasker.extra.STDIN-type>
+					<com.termux.tasker.extra.TERMINAL>false</com.termux.tasker.extra.TERMINAL>
+					<com.termux.tasker.extra.TERMINAL-type>java.lang.Boolean</com.termux.tasker.extra.TERMINAL-type>
+					<com.termux.tasker.extra.VERSION_CODE>1002</com.termux.tasker.extra.VERSION_CODE>
+					<com.termux.tasker.extra.VERSION_CODE-type>java.lang.Integer</com.termux.tasker.extra.VERSION_CODE-type>
+					<com.termux.tasker.extra.WAIT_FOR_RESULT>false</com.termux.tasker.extra.WAIT_FOR_RESULT>
+					<com.termux.tasker.extra.WAIT_FOR_RESULT-type>java.lang.Boolean</com.termux.tasker.extra.WAIT_FOR_RESULT-type>
+					<com.termux.tasker.extra.WORKDIR>/data/data/com.termux/files/home/mpesa-tools</com.termux.tasker.extra.WORKDIR>
+					<com.termux.tasker.extra.WORKDIR-type>java.lang.String</com.termux.tasker.extra.WORKDIR-type>
+					<com.twofortyfouram.locale.intent.extra.BLURB>/data/data/com.termux/files/home/mpesa-tools/run-mpesa.sh
+
+Working Directory ✓
+Stdin ✕
+Custom Log Level null
+Terminal Se</com.twofortyfouram.locale.intent.extra.BLURB>
+					<com.twofortyfouram.locale.intent.extra.BLURB-type>java.lang.String</com.twofortyfouram.locale.intent.extra.BLURB-type>
+					<net.dinglisch.android.tasker.extras.VARIABLE_REPLACE_KEYS>com.termux.tasker.extra.EXECUTABLE com.termux.execute.arguments com.termux.tasker.extra.WORKDIR com.termux.tasker.extra.STDIN com.termux.tasker.extra.SESSION_ACTION com.termux.tasker.extra.BACKGROUND_CUSTOM_LOG_LEVEL</net.dinglisch.android.tasker.extras.VARIABLE_REPLACE_KEYS>
+					<net.dinglisch.android.tasker.extras.VARIABLE_REPLACE_KEYS-type>java.lang.String</net.dinglisch.android.tasker.extras.VARIABLE_REPLACE_KEYS-type>
+					<net.dinglisch.android.tasker.subbundled>true</net.dinglisch.android.tasker.subbundled>
+					<net.dinglisch.android.tasker.subbundled-type>java.lang.Boolean</net.dinglisch.android.tasker.subbundled-type>
+				</Vals>
+			</Bundle>
+			<Str sr="arg1" ve="3">com.termux.tasker</Str>
+			<Str sr="arg2" ve="3">com.termux.tasker.EditConfigurationActivity</Str>
+			<Int sr="arg3" val="10"/>
+			<Int sr="arg4" val="1"/>
+		</Action>
+	</Task>
+</TaskerData>
